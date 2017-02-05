@@ -23,6 +23,10 @@ exports.init = function(socket, rooms, config) {...};
 exports.shutdown = function(socket, finished_callback) {...};
 
 exports.onmessage = function(socket, mdata) {...};
+
+(optional)
+exports.onroomjoin = function(socket, name, room_id) {...}
+
 ``` 
 
 Note: Its not necessary to store any of the init parameters except for the config.token value (if you wish to send messages back in-chat)

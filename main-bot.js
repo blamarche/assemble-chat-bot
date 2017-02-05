@@ -31,19 +31,26 @@ socket.on('connect', function(){
 });
 socket.on('auth', function(d){
     console.log("Logged in.");    
-    console.log("Starting ping");
+    console.log("Starting ping job");
     sendPing();
-
-    console.log("Joining rooms");
-    for (var i=0; i<rooms.length; i++)
-        socket.emit("join", JSON.stringify({"t": config.token, "roomname": rooms[i]}));
 
     console.log("Bot starting...");    
     bot.init(socket, rooms, config);
+
+    console.log("Joining rooms");
+    for (var i=0; i<rooms.length; i++) {
+        //attempt to create the rooms before joining
+        socket.emit("createroom", JSON.stringify({"t": config.token, "roomname": rooms[i], "maxexptime": '24h', "minexptime": '1h', "isprivate": false}));
+        socket.emit("join", JSON.stringify({"t": config.token, "roomname": rooms[i]}));
+    }
 });
 socket.on('auth_error', function(d){
-    console.log("Error logging in.");
-    process.exit(1);
+    if (d=='Invalid Token') {
+        console.log("Error logging in.");
+        process.exit(1);
+    } else {
+        console.log("Warning:", d); //room already exists, etc
+    }
 });
 socket.on('disconnect', function(){
     bot.shutdown(socket, function() {
@@ -67,7 +74,7 @@ function sendPing() {
 // *************************
 
 // Chat events and hooks to bot
-socket.on('chatm', function(d){
+socket.on('chatm', function(d) {
     /*
     { 
     avatar: '',
@@ -82,4 +89,11 @@ socket.on('chatm', function(d){
     uid: 'XXXXXXXX-YYYY-ZZZZ-AAAA-VVVVVVVVVVVV' }
     */
     bot.onmessage(socket, JSON.parse(d));
+});
+
+socket.on('join', function(d) {
+    d=JSON.parse(d);
+    if (bot.onroomjoin) {
+        bot.onroomjoin(socket, d.name, d.room);
+    }
 });
