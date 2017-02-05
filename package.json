@@ -1,0 +1,26 @@
+{
+  "name": "assemble-chat-bot",
+  "version": "1.0.0",
+  "description": "Customizable and simple chat bot framework for assemble web chat",
+  "main": "main-bot.js",
+  "dependencies": {
+    "socket.io-client": "^1.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blamarche/assemble-chat-bot.git"
+  },
+  "keywords": [
+    "chat"
+  ],
+  "author": "Brendan LaMarche",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blamarche/assemble-chat-bot/issues"
+  },
+  "homepage": "https://github.com/blamarche/assemble-chat-bot#readme"
+}
