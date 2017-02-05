@@ -15,7 +15,7 @@ exports.shutdown = function(socket, cb) {
 exports.onmessage = function(socket, mdata) {
     // Handle 'standard' @bots command and respond with usage
     if (mdata.m == "@bots") {
-        socket.emit('chatm', JSON.stringify({"t": token, "room": mdata.room, "m": "@s [your-search] - Search duckduckgo answers API", "dur":"1m"}));
+        socket.emit('chatm', JSON.stringify({"t": token, "room": mdata.room, "m": " @s [your-search] - Search duckduckgo answers API", "dur":"1m"}));
         return;
     }
     
