@@ -100,7 +100,9 @@ function getWikipediaArticle(socket, mdata, title, s) {
             try {
                 var data = JSON.parse(results);                
                 for (var p in data.query.pages) {
-                    m=data.query.pages[p].extract;
+                    m=data.query.pages[p].extract.substring(0,512);
+                    if (data.query.pages[p].extract.length>512)
+                        m+="...";
                     break;
                 }
 
